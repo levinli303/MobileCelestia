@@ -66,6 +66,8 @@
 		97FF95A5240A340300E9F44F /* BaseResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FF95A4240A340300E9F44F /* BaseResultHandler.swift */; };
 		97FF95AA240A3F0900E9F44F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97FF95A9240A3F0900E9F44F /* Data.swift */; };
 		EA09B5EC254BB92900DACC1D /* MWRequest in Frameworks */ = {isa = PBXBuildFile; productRef = EA09B5EB254BB92900DACC1D /* MWRequest */; };
+		EA02EDF824DC2539003127FF /* MetalANGLE.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA02EDF624DC2539003127FF /* MetalANGLE.xcframework */; };
+		EA02EDF924DC2539003127FF /* MetalANGLE.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EA02EDF624DC2539003127FF /* MetalANGLE.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		EA10553324935A4700E49C6D /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA10553224935A4700E49C6D /* Metal.framework */; };
 		EA1BC6E324A0E92B00F3F51B /* EventFinderCoordinatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1BC6E224A0E92B00F3F51B /* EventFinderCoordinatorViewController.swift */; };
 		EA1BC6E524A0E93D00F3F51B /* EventFinderInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1BC6E424A0E93D00F3F51B /* EventFinderInputViewController.swift */; };
@@ -136,6 +138,16 @@
 				EAC84364252C84B600691943 /* CelestiaMacBridge.bundle in Embed PlugIns */,
 			);
 			name = "Embed PlugIns";
+		};
+		EA02EDFA24DC2539003127FF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EA02EDF924DC2539003127FF /* MetalANGLE.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -206,6 +218,7 @@
 		97F1141D2408AE06003A06D7 /* DataLocationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLocationSelectionViewController.swift; sourceTree = "<group>"; };
 		97FF95A4240A340300E9F44F /* BaseResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResultHandler.swift; sourceTree = "<group>"; };
 		97FF95A9240A3F0900E9F44F /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		EA02EDF624DC2539003127FF /* MetalANGLE.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MetalANGLE.xcframework; path = ../CelestiaCore/Frameworks/MetalANGLE.xcframework; sourceTree = "<group>"; };
 		EA10553224935A4700E49C6D /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		EA1BC6E224A0E92B00F3F51B /* EventFinderCoordinatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFinderCoordinatorViewController.swift; sourceTree = "<group>"; };
 		EA1BC6E424A0E93D00F3F51B /* EventFinderInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventFinderInputViewController.swift; sourceTree = "<group>"; };
@@ -258,6 +271,7 @@
 				979D2FAB23FEB2AA005D2592 /* libc++.tbd in Frameworks */,
 				EA5F726B24ACA74F00B0237D /* AppCenterAnalytics.xcframework in Frameworks */,
 				979D2FA623FEB1DD005D2592 /* CelestiaCore.framework in Frameworks */,
+				EA02EDF824DC2539003127FF /* MetalANGLE.xcframework in Frameworks */,
 				EA5F726924ACA74F00B0237D /* AppCenter.xcframework in Frameworks */,
 				EA5F726724ACA74F00B0237D /* AppCenterCrashes.xcframework in Frameworks */,
 			);
@@ -485,6 +499,7 @@
 		979D2FA523FEB1DD005D2592 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA02EDF624DC2539003127FF /* MetalANGLE.xcframework */,
 				EA5F726524ACA74F00B0237D /* AppCenter.xcframework */,
 				EA5F726624ACA74F00B0237D /* AppCenterAnalytics.xcframework */,
 				EA5F726424ACA74F00B0237D /* AppCenterCrashes.xcframework */,
@@ -601,6 +616,7 @@
 				973BBA5724052FFB00E3B061 /* Copy General Data */,
 				973BBA592405305100E3B061 /* Convert PO */,
 				EAC84367252C84B600691943 /* Embed PlugIns */,
+				EA02EDFA24DC2539003127FF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1048,6 +1064,7 @@
 				);
 				MARKETING_VERSION = "$(SHARED_BUILD_VERSION)";
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_SWIFT_FLAGS = "-DUSE_MGL";
 				PRODUCT_BUNDLE_IDENTIFIER = space.celestia.MobileCelestia;
 				PRODUCT_NAME = Celestia;
 				SUPPORTS_MACCATALYST = YES;
@@ -1079,6 +1096,7 @@
 				);
 				MARKETING_VERSION = "$(SHARED_BUILD_VERSION)";
 				OTHER_LDFLAGS = "-ObjC";
+				OTHER_SWIFT_FLAGS = "-DUSE_MGL";
 				PRODUCT_BUNDLE_IDENTIFIER = space.celestia.MobileCelestia;
 				PRODUCT_NAME = Celestia;
 				SUPPORTS_MACCATALYST = YES;

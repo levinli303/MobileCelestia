@@ -58,10 +58,6 @@ extension SettingsMainViewController {
         return mainSetting[section].title
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selection(mainSetting[indexPath.section].items[indexPath.row])
     }

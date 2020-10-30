@@ -18,5 +18,7 @@ class BaseTableViewController: UITableViewController {
         tableView.backgroundColor = .darkBackground
         tableView.alwaysBounceVertical = false
         tableView.separatorColor = .darkSeparator
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableView.automaticDimension
     }
 }

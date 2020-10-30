@@ -106,10 +106,6 @@ extension EventFinderInputViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = allSections[indexPath.section][indexPath.row]
         if let it = item as? DateItem {

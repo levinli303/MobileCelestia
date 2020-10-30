@@ -100,8 +100,4 @@ extension SettingCheckViewController {
         core.setValue(!enabled, forKey: key)
         tableView.reloadData()
     }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
 }

@@ -71,8 +71,4 @@ extension SettingSelectionViewController {
         core.setValue(subitem.index, forKey: item.key)
         tableView.reloadData()
     }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
-    }
 }

@@ -12,8 +12,25 @@
 import UIKit
 
 class SettingStepperCell: UITableViewCell {
-    private lazy var label = UILabel()
-    private lazy var stepper = UIStepper()
+    private var label: UILabel { return self.textLabel! }
+    private var stepper: UIStepper {
+        guard let view = accessoryView as? UIStepper else {
+            let sp = UIStepper()
+            super.accessoryView = sp
+            return sp
+        }
+        return view
+    }
+
+    override var accessoryType: UITableViewCell.AccessoryType {
+        get { return .none }
+        set {}
+    }
+
+    override var accessoryView: UIView? {
+        get { return super.accessoryView }
+        set {}
+    }
 
     var title: String? { didSet { label.text = title }  }
 
@@ -28,7 +45,7 @@ class SettingStepperCell: UITableViewCell {
     private var stepperValue: Double = 0
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
         setup()
     }
@@ -45,24 +62,8 @@ private extension SettingStepperCell {
         backgroundColor = .darkSecondaryBackground
         selectedBackgroundView = UIView()
         selectedBackgroundView?.backgroundColor = .darkSelection
-        label.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(label)
-        label.textColor = .darkLabel
 
         stepper.wraps = true
-
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
-
-        stepper.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(stepper)
-        NSLayoutConstraint.activate([
-            stepper.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 8),
-            stepper.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            stepper.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
         stepperValue = stepper.value
         stepper.addTarget(self, action: #selector(handleChange(_:)), for: .valueChanged)
         stepper.addTarget(self, action: #selector(handleTouchUp(_:)), for: .touchUpInside)

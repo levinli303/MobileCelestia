@@ -31,6 +31,12 @@ class SettingSliderCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        topContainer.layoutMargins = UIEdgeInsets(top: label.font.lineHeight / 2, left: 16, bottom: label.font.lineHeight / 2, right: 16)
+    }
 }
 
 private extension SettingSliderCell {
@@ -51,21 +57,23 @@ private extension SettingSliderCell {
             topContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
             topContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topContainer.heightAnchor.constraint(equalToConstant: 44),
             bottomContainer.topAnchor.constraint(equalTo: topContainer.bottomAnchor),
             bottomContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             bottomContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
 
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        label.textColor = .darkLabel
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         topContainer.addSubview(label)
-        label.textColor = .darkLabel
 
         NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: topContainer.leadingAnchor, constant: 16),
-            label.trailingAnchor.constraint(equalTo: topContainer.trailingAnchor, constant: -16),
-            label.centerYAnchor.constraint(equalTo: topContainer.centerYAnchor)
+            label.leadingAnchor.constraint(equalTo: topContainer.layoutMarginsGuide.leadingAnchor),
+            label.trailingAnchor.constraint(equalTo: topContainer.layoutMarginsGuide.trailingAnchor),
+            label.topAnchor.constraint(equalTo: topContainer.layoutMarginsGuide.topAnchor),
+            label.bottomAnchor.constraint(equalTo: topContainer.layoutMarginsGuide.bottomAnchor),
         ])
 
         slider.minimumTrackTintColor = .darkSliderMinimumTrackTintColor
@@ -76,6 +84,7 @@ private extension SettingSliderCell {
         NSLayoutConstraint.activate([
             slider.leadingAnchor.constraint(equalTo: bottomContainer.leadingAnchor, constant: 16),
             slider.trailingAnchor.constraint(equalTo: bottomContainer.trailingAnchor, constant: -16),
+            slider.heightAnchor.constraint(equalTo: bottomContainer.heightAnchor, multiplier: 0.5),
             slider.centerYAnchor.constraint(equalTo: bottomContainer.centerYAnchor)
         ])
         slider.addTarget(self, action: #selector(handleSlideEnd(_:)), for: .touchUpInside)

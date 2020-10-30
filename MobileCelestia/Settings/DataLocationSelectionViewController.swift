@@ -93,18 +93,6 @@ extension DataLocationSelectionViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let item = items[indexPath.section][indexPath.row]
-        switch item {
-        case .short(_, _):
-            fallthrough
-        case .link(_, _):
-            return 44
-        case .long(_):
-            return UITableView.automaticDimension
-        }
-    }
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 1 {
@@ -127,10 +115,6 @@ extension DataLocationSelectionViewController {
             return CelestiaString("Configuration will take effect after a restart.", comment: "")
         }
         return nil
-    }
-
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
     }
 }
 

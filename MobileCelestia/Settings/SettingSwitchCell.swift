@@ -12,8 +12,25 @@
 import UIKit
 
 class SettingSwitchCell: UITableViewCell {
-    private lazy var label = UILabel()
-    private lazy var `switch` = UISwitch()
+    private var label: UILabel { return self.textLabel! }
+    private var `switch`: UISwitch {
+        guard let view = accessoryView as? UISwitch else {
+            let sw = UISwitch()
+            super.accessoryView = sw
+            return sw
+        }
+        return view
+    }
+
+    override var accessoryType: UITableViewCell.AccessoryType {
+        get { return .none }
+        set {}
+    }
+
+    override var accessoryView: UIView? {
+        get { return super.accessoryView }
+        set {}
+    }
 
     var title: String? { didSet { label.text = title }  }
     var enabled: Bool = false { didSet { `switch`.isOn = enabled } }
@@ -21,7 +38,7 @@ class SettingSwitchCell: UITableViewCell {
     var toggleBlock: ((Bool) -> Void)?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
 
         setup()
     }
@@ -38,22 +55,7 @@ private extension SettingSwitchCell {
         backgroundColor = .darkSecondaryBackground
         selectedBackgroundView = UIView()
         selectedBackgroundView?.backgroundColor = .darkSelection
-        label.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(label)
-        label.textColor = .darkLabel
 
-        NSLayoutConstraint.activate([
-            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
-
-        `switch`.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(`switch`)
-        NSLayoutConstraint.activate([
-            `switch`.leadingAnchor.constraint(equalTo: label.trailingAnchor, constant: 8),
-            `switch`.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            `switch`.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-        ])
         `switch`.addTarget(self, action: #selector(handleToggle(_:)), for: .valueChanged)
     }
 

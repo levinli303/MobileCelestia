@@ -101,10 +101,6 @@ class AsyncListViewController<T: AsyncListItem>: BaseTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selection(items[indexPath.section][indexPath.row])
     }
-
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return useStandardUITableViewCell ? UITableView.automaticDimension : 44
-    }
 }
 
 private extension AsyncListViewController {

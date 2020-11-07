@@ -1,5 +1,5 @@
 //
-// MacBridge.h
+// GLView.h
 //
 // Copyright © 2020 Celestia Development Team. All rights reserved.
 //
@@ -9,17 +9,16 @@
 // of the License, or (at your option) any later version.
 //
 
-#import <AppKit/AppKit.h>
+#import <Cocoa/Cocoa.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MacBridge : NSObject
+@interface MCGLView : NSOpenGLView
 
-+ (CGFloat)catalystScaleFactor;
-+ (void)forceDarkAppearance;
-+ (nullable id)nsWindowForUIWindow:(id)uiWindow;
-+ (void)disableFullScreenForNSWindow:(NSWindow *)window;
-+ (nullable id)createGLViewMSAAEnabled:(BOOL)msaaEnabled bestResolution:(BOOL)bestResolution;
+@property (nonatomic, nullable) void (^drawHandler)(void);
+@property (nonatomic, nullable) void (^sizeChangeHandler)(NSSize);
+
+- (nullable instancetype)initWithMSAAEnabled:(BOOL)msaaEnabled wantsBestResolution:(BOOL)wantsBestResolution;
 
 @end
 

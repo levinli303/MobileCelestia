@@ -10,6 +10,7 @@
 //
 
 #import "MacBridge.h"
+#import "MCGLView.h"
 
 @implementation MacBridge
 
@@ -69,6 +70,10 @@
     [window setCollectionBehavior:behavior];
     NSButton *button = [window standardWindowButton:NSWindowZoomButton];
     [button setEnabled:NO];
+}
+
++ (id)createGLViewMSAAEnabled:(BOOL)msaaEnabled bestResolution:(BOOL)bestResolution {
+    return [[MCGLView alloc] initWithMSAAEnabled:msaaEnabled wantsBestResolution:bestResolution];
 }
 
 @end

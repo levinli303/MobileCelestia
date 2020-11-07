@@ -54,7 +54,6 @@
 		979D2F8723FEB1A8005D2592 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 979D2F8623FEB1A8005D2592 /* Assets.xcassets */; };
 		979D2F8A23FEB1A8005D2592 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 979D2F8823FEB1A8005D2592 /* LaunchScreen.storyboard */; };
 		979D2F9523FEB1A8005D2592 /* MobileCelestiaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 979D2F9423FEB1A8005D2592 /* MobileCelestiaTests.swift */; };
-		979D2FA623FEB1DD005D2592 /* CelestiaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 979D2FA423FEB1D6005D2592 /* CelestiaCore.framework */; };
 		979D2FAB23FEB2AA005D2592 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 979D2FAA23FEB2A5005D2592 /* libc++.tbd */; };
 		979D2FAD23FEB2B4005D2592 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 979D2FAC23FEB2AE005D2592 /* libbz2.tbd */; };
 		979D2FAF23FEB2BD005D2592 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 979D2FAE23FEB2B9005D2592 /* libz.tbd */; };
@@ -78,7 +77,10 @@
 		EA934C9A251D92AD00DD284C /* PanelSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA934C99251D92A700DD284C /* PanelSceneDelegate.swift */; };
 		EA982BFF25496B6D00CDC642 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA982BFE25496B6D00CDC642 /* BaseTableViewController.swift */; };
 		EAA6C4CB253B5CD200ED1D60 /* InstalledResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA6C4CA253B5CD200ED1D60 /* InstalledResourceViewController.swift */; };
+		EAA6E0FA25563E8A0078DFA2 /* CelestiaCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 979D2FA423FEB1D6005D2592 /* CelestiaCore.framework */; };
+		EAA6E0FB25563E8A0078DFA2 /* CelestiaCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 979D2FA423FEB1D6005D2592 /* CelestiaCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EABC245D248E162000205B5A /* FontHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EABC245A248E162000205B5A /* FontHelper.m */; };
+		EABC9F0425562D84008F23A1 /* MCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = EABC9F0325562D84008F23A1 /* MCGLView.m */; };
 		EABDE367247170F000E0A5FA /* SettngSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDE366247170F000E0A5FA /* SettngSliderCell.swift */; };
 		EABDE3A92473DAA300E0A5FA /* SettingCommonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABDE3A82473DAA300E0A5FA /* SettingCommonViewController.swift */; };
 		EABF7911253895FD00F2460C /* ResourceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF7910253895FD00F2460C /* ResourceViewController.swift */; };
@@ -117,6 +119,13 @@
 			remoteGlobalIDString = 971A65CC23019BC5009E4EA1;
 			remoteInfo = CelestiaCore;
 		};
+		EAA6E10125563EA00078DFA2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 979D2F9F23FEB1D5005D2592 /* CelestiaCore.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 971A65CB23019BC5009E4EA1;
+			remoteInfo = CelestiaCore;
+		};
 		EAC84365252C84B600691943 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 979D2F7223FEB1A6005D2592 /* Project object */;
@@ -127,6 +136,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		EAA6E0FC25563E8A0078DFA2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				EAA6E0FB25563E8A0078DFA2 /* CelestiaCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EAC84367252C84B600691943 /* Embed PlugIns */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -221,6 +241,8 @@
 		EAA6C4CA253B5CD200ED1D60 /* InstalledResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledResourceViewController.swift; sourceTree = "<group>"; };
 		EABC245A248E162000205B5A /* FontHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontHelper.m; sourceTree = "<group>"; };
 		EABC245C248E162000205B5A /* FontHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontHelper.h; sourceTree = "<group>"; };
+		EABC9F0225562D84008F23A1 /* MCGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCGLView.h; sourceTree = "<group>"; };
+		EABC9F0325562D84008F23A1 /* MCGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCGLView.m; sourceTree = "<group>"; };
 		EABDE366247170F000E0A5FA /* SettngSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettngSliderCell.swift; sourceTree = "<group>"; };
 		EABDE3A82473DAA300E0A5FA /* SettingCommonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCommonViewController.swift; sourceTree = "<group>"; };
 		EABF7910253895FD00F2460C /* ResourceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +272,7 @@
 				EABF795325391ECB00F2460C /* Zip in Frameworks */,
 				EA10553324935A4700E49C6D /* Metal.framework in Frameworks */,
 				979D2FAD23FEB2B4005D2592 /* libbz2.tbd in Frameworks */,
+				EAA6E0FA25563E8A0078DFA2 /* CelestiaCore.framework in Frameworks */,
 				979D2FAF23FEB2BD005D2592 /* libz.tbd in Frameworks */,
 				EABF7A032539731300F2460C /* SDWebImage in Frameworks */,
 				EA09B5EC254BB92900DACC1D /* MWRequest in Frameworks */,
@@ -570,6 +593,8 @@
 				EAC84356252C816500691943 /* Info.plist */,
 				EAC8435D252C818700691943 /* MacBridge.h */,
 				EAC8435E252C818700691943 /* MacBridge.m */,
+				EABC9F0225562D84008F23A1 /* MCGLView.h */,
+				EABC9F0325562D84008F23A1 /* MCGLView.m */,
 			);
 			path = CelestiaMacBridge;
 			sourceTree = "<group>";
@@ -596,10 +621,12 @@
 				973BBA5724052FFB00E3B061 /* Copy General Data */,
 				973BBA592405305100E3B061 /* Convert PO */,
 				EAC84367252C84B600691943 /* Embed PlugIns */,
+				EAA6E0FC25563E8A0078DFA2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				EAA6E10225563EA00078DFA2 /* PBXTargetDependency */,
 				EAC84366252C84B600691943 /* PBXTargetDependency */,
 			);
 			name = MobileCelestia;
@@ -878,6 +905,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAC8435F252C818700691943 /* MacBridge.m in Sources */,
+				EABC9F0425562D84008F23A1 /* MCGLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -888,6 +916,11 @@
 			isa = PBXTargetDependency;
 			target = 979D2F7923FEB1A6005D2592 /* MobileCelestia */;
 			targetProxy = 979D2F9123FEB1A8005D2592 /* PBXContainerItemProxy */;
+		};
+		EAA6E10225563EA00078DFA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CelestiaCore;
+			targetProxy = EAA6E10125563EA00078DFA2 /* PBXContainerItemProxy */;
 		};
 		EAC84366252C84B600691943 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

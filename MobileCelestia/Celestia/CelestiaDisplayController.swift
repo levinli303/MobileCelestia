@@ -12,9 +12,67 @@
 import UIKit
 import CelestiaCore
 
-#if !USE_MGL
+#if !targetEnvironment(macCatalyst)
 import GLKit
 #endif
+
+class CompatGLView: UIView {
+    #if targetEnvironment(macCatalyst)
+    let nativeGLView: NSObject
+    #else
+    let nativeGLView: GLKView
+    #endif
+
+    var drawHandler: (@convention(block) () -> Void)? {
+        didSet {
+            nativeGLView.setValue(drawHandler, forKey: "drawHandler")
+        }
+    }
+    
+    var sizeChangeHandler: (@convention(block) (CGSize) -> Void)? {
+        didSet {
+            nativeGLView.setValue(sizeChangeHandler, forKey: "sizeChangeHandler")
+        }
+    }
+
+    func useOpenGLContextAsCurrent() {
+        (nativeGLView.value(forKey: "openGLContext") as? NSObject)?.perform(NSSelectorFromString("makeCurrentContext"))
+    }
+
+    func clearOpenGLContext() {
+        (NSClassFromString("NSOpenGLContext") as? NSObject.Type)?.perform(NSSelectorFromString("clearCurrentContext"))
+    }
+
+    func requestDraw() {
+        nativeGLView.setValue(true, forKey: "needsDisplay")
+    }
+    
+    init?(msaaEnabled: Bool, bestResolution: Bool) {
+        #if targetEnvironment(macCatalyst)
+        guard let nativeGLView = MacBridge.createGLView(msaaEnabled, bestResolution) else {
+            return nil
+        }
+        let uiNSViewClass = NSClassFromString("_UINSView") as! NSObject.Type
+        self.nativeGLView = nativeGLView
+        let wrapperView = uiNSViewClass.perform(NSSelectorFromString("alloc"))!.takeUnretainedValue().perform(NSSelectorFromString("initWithContentNSView:"), with: nativeGLView).takeUnretainedValue() as! UIView
+        super.init(frame: .zero)
+        addSubview(wrapperView)
+        wrapperView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            wrapperView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            wrapperView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            wrapperView.topAnchor.constraint(equalTo: topAnchor),
+            wrapperView.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
+        #else
+        return nil
+        #endif
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
 
 class CelestiaDisplayController: UIViewController {
 
@@ -29,7 +87,7 @@ class CelestiaDisplayController: UIViewController {
     #if USE_MGL
     private lazy var glView = MGLKView(frame: .zero)
     #else
-    private lazy var glView = GLKView(frame: .zero)
+    private var glView: CompatGLView! // GLKView(frame: .zero)
     #endif
 
     // MARK: gesture
@@ -40,9 +98,8 @@ class CelestiaDisplayController: UIViewController {
     private var configFileURL: UniformedURL!
 
     override func loadView() {
-        glView.translatesAutoresizingMaskIntoConstraints = false
         setupOpenGL()
-        glView.delegate = self
+//        glView.delegate = self
 
         view = glView
     }
@@ -71,38 +128,38 @@ private extension CelestiaAppCore {
         setSafeAreaInsets(left: safeAreaInsets.left, top: safeAreaInsets.top, right: safeAreaInsets.right, bottom: safeAreaInsets.bottom)
     }
 }
-
-#if USE_MGL
-extension CelestiaDisplayController: MGLKViewDelegate {
-    func mglkView(_ view: MGLKView!, drawIn rect: CGRect) {
-        guard ready else { return }
-
-        let size = view.drawableSize
-        if size != currentSize {
-            currentSize = size
-            core.resize(to: currentSize)
-        }
-
-        core.draw()
-        core.tick()
-    }
-}
-#else
-extension CelestiaDisplayController: GLKViewDelegate {
-    func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        guard ready else { return }
-
-        let size = CGSize(width: view.drawableWidth, height: view.drawableHeight)
-        if size != currentSize {
-            currentSize = size
-            core.resize(to: currentSize)
-        }
-
-        core.draw()
-        core.tick()
-    }
-}
-#endif
+//
+//#if USE_MGL
+//extension CelestiaDisplayController: MGLKViewDelegate {
+//    func mglkView(_ view: MGLKView!, drawIn rect: CGRect) {
+//        guard ready else { return }
+//
+//        let size = view.drawableSize
+//        if size != currentSize {
+//            currentSize = size
+//            core.resize(to: currentSize)
+//        }
+//
+//        core.draw()
+//        core.tick()
+//    }
+//}
+//#else
+//extension CelestiaDisplayController: GLKViewDelegate {
+//    func glkView(_ view: GLKView, drawIn rect: CGRect) {
+//        guard ready else { return }
+//
+//        let size = CGSize(width: view.drawableWidth, height: view.drawableHeight)
+//        if size != currentSize {
+//            currentSize = size
+//            core.resize(to: currentSize)
+//        }
+//
+//        core.draw()
+//        core.tick()
+//    }
+//}
+//#endif
 
 extension CelestiaDisplayController {
     @objc private func handleDisplayLink(_ sender: CADisplayLink) {
@@ -110,7 +167,8 @@ extension CelestiaDisplayController {
     }
 
     private func displaySourceCallback() {
-        glView.display()
+        glView.requestDraw()
+//        glView.display()
     }
 }
 
@@ -125,21 +183,36 @@ extension CelestiaDisplayController {
 
         glView.drawableMultisample = UserDefaults.app[.msaa] == true ? MGLDrawableMultisample4X : MGLDrawableMultisampleNone
         #else
-        let context = EAGLContext(api: .openGLES2)!
-        context.isMultiThreaded = true
-
-        EAGLContext.setCurrent(context)
-
-        glView.context = context
-        glView.enableSetNeedsDisplay = false
-        glView.drawableDepthFormat = .format24
-
-        glView.drawableMultisample = UserDefaults.app[.msaa] == true ? .multisample4X : .multisampleNone
+//        let context = EAGLContext(api: .openGLES2)!
+//        context.isMultiThreaded = true
+//
+//        EAGLContext.setCurrent(context)
+//
+//        glView.context = context
+//        glView.enableSetNeedsDisplay = false
+//        glView.drawableDepthFormat = .format24
+//
+//        glView.drawableMultisample = UserDefaults.app[.msaa] == true ? .multisample4X : .multisampleNone
         #endif
 
+        let msaaEnabled = UserDefaults.app[.msaa] == true
+        let bestResolution = UserDefaults.app[.fullDPI] == true
+        glView = CompatGLView(msaaEnabled: msaaEnabled, bestResolution: bestResolution)
         // Set initial scale from user defaults
         let viewScale = UserDefaults.app[.fullDPI] == true ? traitCollection.displayScale : 1
         glView.contentScaleFactor = viewScale
+
+        glView.drawHandler = { [weak self] in
+            guard let self = self, self.ready else { return }
+
+            self.core.tick()
+            self.core.draw()
+        }
+        glView.sizeChangeHandler = { [weak self] newSize in
+            guard let self = self, self.ready else { return }
+            
+            self.core.resize(to: newSize)
+        }
 
         return true
     }
@@ -147,8 +220,8 @@ extension CelestiaDisplayController {
     private func setupCelestia(statusUpdater: @escaping (String) -> Void, errorHandler: @escaping () -> Bool, completionHandler: @escaping (Bool) -> Void) {
 
         #if !USE_MGL
-        let context = glView.context
-        EAGLContext.setCurrent(context)
+//        let context = glView.context
+//        EAGLContext.setCurrent(context)
         #endif
 
         _ = CelestiaAppCore.initGL()
@@ -156,8 +229,9 @@ extension CelestiaDisplayController {
         core = CelestiaAppCore.shared
 
         DispatchQueue.global().async { [unowned self] in
+            glView.useOpenGLContextAsCurrent()
             #if !USE_MGL
-            EAGLContext.setCurrent(context)
+//            EAGLContext.setCurrent(context)
             #endif
 
             var success = false
@@ -257,6 +331,9 @@ extension CelestiaDisplayController {
         core.setTitleFont(boldFont.filePath, collectionIndex: boldFont.collectionIndex, fontSize: 15)
         core.setRendererFont(font.filePath, collectionIndex: font.collectionIndex, fontSize: 9, fontStyle: .normal)
         core.setRendererFont(boldFont.filePath, collectionIndex: boldFont.collectionIndex, fontSize: 15, fontStyle: .large)
+
+        core.resize(to: glView.bounds.size)
+
         core.tick()
         core.start()
     }

@@ -218,6 +218,10 @@ class MacBridge {
     static func disableFullScreenForNSWindow(_ nsWindow: NSObject) {
         clazz.perform(NSSelectorFromString("disableFullScreenForNSWindow:"), with: nsWindow)
     }
+
+    static func createGLView(_ msaaEnabled: Bool, _ bestResolution: Bool) -> NSObject? {
+        return clazz.perform(NSSelectorFromString("createGLViewMSAAEnabled:bestResolution:"), with: msaaEnabled, with: bestResolution)?.takeUnretainedValue() as? NSObject
+    }
 }
 #endif
 
